@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "tianzi",
+      "script": "server/index.js",
+      "instances": 1,
+      "merge_logs": true,
+      "ignore_watch" : ["node_modules", "src/","public/"],
+      "watch": true,
+      "out_file": "/dev/null",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "max_memory_restart": "300M"
+    }
+  ]
+}
