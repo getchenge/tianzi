@@ -10,7 +10,11 @@ global.db = mongoose.createConnection('mongodb://127.0.0.1/tianzi_user', { promi
 
 const app = new Koa();
 const server = http.createServer(app.callback());
-const port = 3001;
+
+let port = 3000;
+if (process.env.NODE_ENV === 'production') {
+  port = 80;
+}
 
 const routes = require('./routes');
 
