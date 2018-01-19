@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/style/css/index.css" />
   <link rel="stylesheet" href="/dist/user.css" />
   {+css /}
-  <title>{+title}Torch{/title}</title>
+  <title>{title}</title>
 </head>
 <body class="index">
   <div id="root"></div>
