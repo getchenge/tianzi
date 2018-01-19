@@ -113,6 +113,9 @@ function massSend(to, message) {
       "text": { "content": message }
     };
     const receivers = to;
+    if (receivers.length === 1) {
+      receivers[1] = receivers[0];
+    }
     api.massSend(opts, receivers, (err, msg) => {
       console.info('massSend__', err, msg);
       if (!err) {
