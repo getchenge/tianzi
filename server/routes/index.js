@@ -114,6 +114,7 @@ function massSend(to, message) {
     };
     const receivers = to;
     api.massSend(opts, receivers, (err, msg) => {
+      console.info('massSend__', err, msg);
       if (!err) {
         return resolve(msg);
       }
@@ -129,6 +130,7 @@ router.post('/api/send', async (ctx, next) => {
     try {
       return ctx.body = await sendText(to, message);
     } catch (e) {
+      console.info('sendText__', e);
       try {
         return ctx.body = await massSend(to, message);
       } catch (error) {
