@@ -30,7 +30,6 @@ class SendForm extends Component {
     const values = this.props.form.getFieldsValue();
     const to = values.to && values.to.map(item => item.key);
     const payload = Object.assign({}, values, { to });
-    console.info('~~~', values, payload);
     dispatch({
       type: 'users/send',
       payload
@@ -135,7 +134,10 @@ class SendForm extends Component {
               onChange={this.handleChange}
               style={{ width: '100%' }}
             >
-              {data.map(d => <Option key={d.openid}>{d.nickname}</Option>)}
+              {data.map(d => {
+                const remark = d.remark ? ` (${d.remark})` : '';
+                return <Option key={d.openid}>{d.nickname}{remark}</Option>
+              })}
             </Select>
             )}
           <ul className={styles.advice}>
