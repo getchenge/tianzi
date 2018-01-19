@@ -1512,7 +1512,7 @@ module.exports = { debugTool: debugTool };
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(227);
+var _assign = __webpack_require__(223);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -11889,7 +11889,7 @@ var has = __webpack_require__(31);
 var Iterators = __webpack_require__(39);
 var $iterCreate = __webpack_require__(258);
 var setToStringTag = __webpack_require__(71);
-var getPrototypeOf = __webpack_require__(223);
+var getPrototypeOf = __webpack_require__(224);
 var ITERATOR = __webpack_require__(12)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -18016,6 +18016,12 @@ exports.connect = __webpack_require__(196).connect;
 /* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(250), __esModule: true };
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(31);
 var toObject = __webpack_require__(63);
@@ -18032,7 +18038,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -18048,7 +18054,7 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(463);
@@ -18056,7 +18062,145 @@ module.exports.routerRedux = __webpack_require__(186);
 
 
 /***/ }),
-/* 226 */
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(4);
+
+var React = _interopRequireWildcard(_react);
+
+var _rcNotification = __webpack_require__(246);
+
+var _rcNotification2 = _interopRequireDefault(_rcNotification);
+
+var _icon = __webpack_require__(221);
+
+var _icon2 = _interopRequireDefault(_icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+var defaultDuration = 3;
+var defaultTop = void 0;
+var messageInstance = void 0;
+var key = 1;
+var prefixCls = 'ant-message';
+var getContainer = void 0;
+function getMessageInstance(callback) {
+    if (messageInstance) {
+        callback(messageInstance);
+        return;
+    }
+    _rcNotification2['default'].newInstance({
+        prefixCls: prefixCls,
+        transitionName: 'move-up',
+        style: { top: defaultTop },
+        getContainer: getContainer
+    }, function (instance) {
+        if (messageInstance) {
+            callback(messageInstance);
+            return;
+        }
+        messageInstance = instance;
+        callback(instance);
+    });
+}
+function notice(content) {
+    var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
+    var type = arguments[2];
+    var onClose = arguments[3];
+
+    var iconType = {
+        info: 'info-circle',
+        success: 'check-circle',
+        error: 'cross-circle',
+        warning: 'exclamation-circle',
+        loading: 'loading'
+    }[type];
+    if (typeof duration === 'function') {
+        onClose = duration;
+        duration = defaultDuration;
+    }
+    var target = key++;
+    getMessageInstance(function (instance) {
+        instance.notice({
+            key: target,
+            duration: duration,
+            style: {},
+            content: React.createElement(
+                'div',
+                { className: prefixCls + '-custom-content ' + prefixCls + '-' + type },
+                React.createElement(_icon2['default'], { type: iconType }),
+                React.createElement(
+                    'span',
+                    null,
+                    content
+                )
+            ),
+            onClose: onClose
+        });
+    });
+    return function () {
+        if (messageInstance) {
+            messageInstance.removeNotice(target);
+        }
+    };
+}
+exports['default'] = {
+    info: function info(content, duration, onClose) {
+        return notice(content, duration, 'info', onClose);
+    },
+    success: function success(content, duration, onClose) {
+        return notice(content, duration, 'success', onClose);
+    },
+    error: function error(content, duration, onClose) {
+        return notice(content, duration, 'error', onClose);
+    },
+
+    // Departed usage, please use warning()
+    warn: function warn(content, duration, onClose) {
+        return notice(content, duration, 'warning', onClose);
+    },
+    warning: function warning(content, duration, onClose) {
+        return notice(content, duration, 'warning', onClose);
+    },
+    loading: function loading(content, duration, onClose) {
+        return notice(content, duration, 'loading', onClose);
+    },
+    config: function config(options) {
+        if (options.top !== undefined) {
+            defaultTop = options.top;
+            messageInstance = null; // delete messageInstance for new defaultTop
+        }
+        if (options.duration !== undefined) {
+            defaultDuration = options.duration;
+        }
+        if (options.prefixCls !== undefined) {
+            prefixCls = options.prefixCls;
+        }
+        if (options.getContainer !== undefined) {
+            getContainer = options.getContainer;
+        }
+    },
+    destroy: function destroy() {
+        if (messageInstance) {
+            messageInstance.destroy();
+            messageInstance = null;
+        }
+    }
+};
+module.exports = exports['default'];
+
+/***/ }),
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18934,13 +19078,7 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 227 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(250), __esModule: true };
-
-/***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -19137,7 +19275,7 @@ ClassList.prototype.contains = function(name){
 
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19166,144 +19304,6 @@ function createChainedFunction() {
 }
 
 /***/ }),
-/* 230 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(4);
-
-var React = _interopRequireWildcard(_react);
-
-var _rcNotification = __webpack_require__(246);
-
-var _rcNotification2 = _interopRequireDefault(_rcNotification);
-
-var _icon = __webpack_require__(221);
-
-var _icon2 = _interopRequireDefault(_icon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-var defaultDuration = 3;
-var defaultTop = void 0;
-var messageInstance = void 0;
-var key = 1;
-var prefixCls = 'ant-message';
-var getContainer = void 0;
-function getMessageInstance(callback) {
-    if (messageInstance) {
-        callback(messageInstance);
-        return;
-    }
-    _rcNotification2['default'].newInstance({
-        prefixCls: prefixCls,
-        transitionName: 'move-up',
-        style: { top: defaultTop },
-        getContainer: getContainer
-    }, function (instance) {
-        if (messageInstance) {
-            callback(messageInstance);
-            return;
-        }
-        messageInstance = instance;
-        callback(instance);
-    });
-}
-function notice(content) {
-    var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultDuration;
-    var type = arguments[2];
-    var onClose = arguments[3];
-
-    var iconType = {
-        info: 'info-circle',
-        success: 'check-circle',
-        error: 'cross-circle',
-        warning: 'exclamation-circle',
-        loading: 'loading'
-    }[type];
-    if (typeof duration === 'function') {
-        onClose = duration;
-        duration = defaultDuration;
-    }
-    var target = key++;
-    getMessageInstance(function (instance) {
-        instance.notice({
-            key: target,
-            duration: duration,
-            style: {},
-            content: React.createElement(
-                'div',
-                { className: prefixCls + '-custom-content ' + prefixCls + '-' + type },
-                React.createElement(_icon2['default'], { type: iconType }),
-                React.createElement(
-                    'span',
-                    null,
-                    content
-                )
-            ),
-            onClose: onClose
-        });
-    });
-    return function () {
-        if (messageInstance) {
-            messageInstance.removeNotice(target);
-        }
-    };
-}
-exports['default'] = {
-    info: function info(content, duration, onClose) {
-        return notice(content, duration, 'info', onClose);
-    },
-    success: function success(content, duration, onClose) {
-        return notice(content, duration, 'success', onClose);
-    },
-    error: function error(content, duration, onClose) {
-        return notice(content, duration, 'error', onClose);
-    },
-
-    // Departed usage, please use warning()
-    warn: function warn(content, duration, onClose) {
-        return notice(content, duration, 'warning', onClose);
-    },
-    warning: function warning(content, duration, onClose) {
-        return notice(content, duration, 'warning', onClose);
-    },
-    loading: function loading(content, duration, onClose) {
-        return notice(content, duration, 'loading', onClose);
-    },
-    config: function config(options) {
-        if (options.top !== undefined) {
-            defaultTop = options.top;
-            messageInstance = null; // delete messageInstance for new defaultTop
-        }
-        if (options.duration !== undefined) {
-            defaultDuration = options.duration;
-        }
-        if (options.prefixCls !== undefined) {
-            prefixCls = options.prefixCls;
-        }
-        if (options.getContainer !== undefined) {
-            getContainer = options.getContainer;
-        }
-    },
-    destroy: function destroy() {
-        if (messageInstance) {
-            messageInstance.destroy();
-            messageInstance = null;
-        }
-    }
-};
-module.exports = exports['default'];
-
-/***/ }),
 /* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19321,7 +19321,7 @@ __webpack_require__(371);
 "use strict";
 
 
-var _message2 = __webpack_require__(230);
+var _message2 = __webpack_require__(227);
 
 var _message3 = _interopRequireDefault(_message2);
 
@@ -20362,7 +20362,7 @@ var _require2 = __webpack_require__(28),
     isValidElement = _require2.isValidElement;
 
 var ReactNoopUpdateQueue = __webpack_require__(136);
-var factory = __webpack_require__(226);
+var factory = __webpack_require__(228);
 
 module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 
@@ -20444,7 +20444,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_react_dom__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_animate__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_createChainedFunction__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_createChainedFunction__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_classnames__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Notice__ = __webpack_require__(369);
@@ -31644,7 +31644,7 @@ AnimateChild.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Event__ = __webpack_require__(368);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_component_classes__);
 
 
@@ -35410,7 +35410,7 @@ module.exports = __webpack_require__(10).Object.keys;
 var toObject = __webpack_require__(63);
 var $keys = __webpack_require__(49);
 
-__webpack_require__(224)('keys', function () {
+__webpack_require__(225)('keys', function () {
   return function keys(it) {
     return $keys(toObject(it));
   };
@@ -39447,7 +39447,7 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _router = __webpack_require__(225);
+var _router = __webpack_require__(226);
 
 var _dynamic = __webpack_require__(474);
 

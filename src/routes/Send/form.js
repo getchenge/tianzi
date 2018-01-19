@@ -135,8 +135,15 @@ class SendForm extends Component {
               style={{ width: '100%' }}
             >
               {data.map(d => {
+                console.info('d.remark', d.remark);
                 const remark = d.remark ? ` (${d.remark})` : '';
-                return <Option key={d.openid}>{d.nickname}{remark}</Option>
+                let namevalue = '';
+                if (d.remark) {
+                  namevalue = `${d.remark} (${d.nickname})`
+                } else {
+                  namevalue = d.nickname;
+                }
+                return <Option key={d.openid}>{namevalue}</Option>
               })}
             </Select>
             )}

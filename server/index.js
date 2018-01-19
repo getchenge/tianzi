@@ -11,7 +11,7 @@ global.db = mongoose.createConnection('mongodb://127.0.0.1/tianzi_user', { promi
 const app = new Koa();
 const server = http.createServer(app.callback());
 
-let port = 3000;
+let port = 3001;
 if (process.env.NODE_ENV === 'production') {
   port = 80;
 }

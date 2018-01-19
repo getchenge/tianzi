@@ -312,7 +312,7 @@ var _regenerator = __webpack_require__(131);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _assign = __webpack_require__(227);
+var _assign = __webpack_require__(223);
 
 var _assign2 = _interopRequireDefault(_assign);
 

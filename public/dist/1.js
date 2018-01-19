@@ -686,7 +686,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _dva = __webpack_require__(222);
 
-var _router = __webpack_require__(225);
+var _router = __webpack_require__(226);
 
 var _form3 = __webpack_require__(695);
 
@@ -976,7 +976,7 @@ function deepMerge(target, source) {
 
 
 var React = __webpack_require__(4);
-var factory = __webpack_require__(226);
+var factory = __webpack_require__(228);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -2393,9 +2393,9 @@ module.exports = __webpack_require__(10).Object.getPrototypeOf;
 
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = __webpack_require__(63);
-var $getPrototypeOf = __webpack_require__(223);
+var $getPrototypeOf = __webpack_require__(224);
 
-__webpack_require__(224)('getPrototypeOf', function () {
+__webpack_require__(225)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -2510,7 +2510,7 @@ function toArray(children) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_util_es_KeyCode__ = __webpack_require__(488);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_util_es_createChainedFunction__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_util_es_createChainedFunction__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dom_scroll_into_view__ = __webpack_require__(492);
@@ -4173,7 +4173,7 @@ var _regenerator = __webpack_require__(131);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _assign = __webpack_require__(227);
+var _assign = __webpack_require__(223);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -6795,7 +6795,7 @@ __WEBPACK_IMPORTED_MODULE_0__Select__["a" /* default */].OptGroup = __WEBPACK_IM
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_classnames__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_component_classes__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_component_classes__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_component_classes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_component_classes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_menu__ = __webpack_require__(497);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_warning__ = __webpack_require__(8);
@@ -17437,11 +17437,11 @@ var _spin = __webpack_require__(542);
 
 var _spin2 = _interopRequireDefault(_spin);
 
-var _message2 = __webpack_require__(230);
+var _message2 = __webpack_require__(227);
 
 var _message3 = _interopRequireDefault(_message2);
 
-var _assign = __webpack_require__(227);
+var _assign = __webpack_require__(223);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -17495,7 +17495,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _dva = __webpack_require__(222);
 
-var _router = __webpack_require__(225);
+var _router = __webpack_require__(226);
 
 var _style = __webpack_require__(601);
 
@@ -17540,7 +17540,6 @@ var SendForm = function (_Component) {
         return item.key;
       });
       var payload = (0, _assign2.default)({}, values, { to: to });
-      console.info('~~~', values, payload);
       dispatch({
         type: 'users/send',
         payload: payload
@@ -17678,10 +17677,18 @@ var SendForm = function (_Component) {
               style: { width: '100%' }
             },
             data.map(function (d) {
+              console.info('d.remark', d.remark);
+              var remark = d.remark ? ' (' + d.remark + ')' : '';
+              var namevalue = '';
+              if (d.remark) {
+                namevalue = d.remark + ' (' + d.nickname + ')';
+              } else {
+                namevalue = d.nickname;
+              }
               return _react2.default.createElement(
                 Option,
                 { key: d.openid },
-                d.nickname
+                namevalue
               );
             })
           )),

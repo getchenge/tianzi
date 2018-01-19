@@ -553,7 +553,7 @@ var _icon = __webpack_require__(221);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _message2 = __webpack_require__(230);
+var _message2 = __webpack_require__(227);
 
 var _message3 = _interopRequireDefault(_message2);
 
@@ -587,7 +587,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _dva = __webpack_require__(222);
 
-var _router = __webpack_require__(225);
+var _router = __webpack_require__(226);
 
 var _style = __webpack_require__(612);
 
@@ -702,9 +702,9 @@ module.exports = __webpack_require__(10).Object.getPrototypeOf;
 
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = __webpack_require__(63);
-var $getPrototypeOf = __webpack_require__(223);
+var $getPrototypeOf = __webpack_require__(224);
 
-__webpack_require__(224)('getPrototypeOf', function () {
+__webpack_require__(225)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
