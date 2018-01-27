@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Spin, Row, Col, Checkbox, Button, AutoComplete, message } from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Spin, Row, Col, Checkbox, Radio, Button, AutoComplete, message } from 'antd';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 const Option = Select.Option;
+const CheckboxGroup = Checkbox.Group;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 import styles from './style.scss';
 import debounce from 'lodash.debounce';
 const request = require('../../utils/request');
@@ -21,30 +24,27 @@ class SendForm extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    const me = this;
+    const { dispatch } = this.props;
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      console.info('validateFields__', err);
       if (!err) {
         console.log('Received values of form: ', values);
+        const values = me.props.form.getFieldsValue();
+        const to = values.to && values.to.map(item => item.key);
+        const totag = values.totag;
+        const payload = Object.assign({}, values, { to });
+        dispatch({
+          type: 'users/send',
+          payload
+        }).then((e) => {
+          if (!e) {
+            message.success('发送成功');
+          }
+        });
       }
     });
-    const dispatch = this.props.dispatch;
-    const values = this.props.form.getFieldsValue();
-    const to = values.to && values.to.map(item => item.key);
-    const payload = Object.assign({}, values, { to });
-    dispatch({
-      type: 'users/send',
-      payload
-    }).then((e) => {
-      if (!e) {
-        message.success('发送成功');
-      }
-    });
-    // dispatch({
-    //   type: 'sections/create',
-    //   payload: values,
-    // }).then(() => {
-    //   message.success('创建成功');
-    //   this.props.history.push(`/dashboard/`);
-    // });
+
   }
   add = () => {
     uuid++;
@@ -83,9 +83,6 @@ class SendForm extends Component {
         data: resp.data,
         fetching: false
       });
-      // form.setFieldsValue({
-      //   to: data
-      // });
     });
 
   }
@@ -96,12 +93,7 @@ class SendForm extends Component {
       fetching: false,
     });
   }
-  // handleChange = (value) => {
-  //   const { form } = this.props;
-  //   const to = form.getFieldValue('to');
-  //   console.info('to__', to, value);
-  //   form.setFieldsValue({ to: value });
-  // }
+
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -111,50 +103,73 @@ class SendForm extends Component {
       labelCol: { span: 4 },
       wrapperCol: { span: 8, offset: 8 },
     };
-    const { form, list, loading } = this.props;
+    const { form, list, loading, isTags, tags } = this.props;
     const { fetching, data, value } = this.state;
     const { getFieldDecorator } = form;
-    console.info('fetching', fetching);
-    return (
-      <Form onSubmit={this.handleSubmit}>
+    const tags_options = tags instanceof Array && tags.map(tag => {
+      return { label: tag.name, value: tag.id };
+    });
+    let tags_radios;
+    console.info('tags_options__', tags_options);
+    if (tags_options && tags_options.length > 0) {
+      tags_radios = tags_options.map(option => {
+        return (<RadioButton value={option.value}>{option.label}</RadioButton>)
+      })
+    }
+    const toElem = !isTags ? (
+      <FormItem {...formItemLayout} className={styles['input-wraper']} label="To">
+        {getFieldDecorator('to', {
+          rules: [{
+            required: true,
+            message: '请输入要通知的粉丝',
+          }]
+        })(
+          <Select
+            mode="multiple"
+            labelInValue
+            placeholder="查找用户"
+            notFoundContent={fetching ? <Spin size="small" /> : null}
+            filterOption={false}
+            onSearch={this.fetchUser}
+            onChange={this.handleChange}
+            style={{ width: '100%' }}
+          >
+            {data.map(d => {
+              const remark = d.remark ? ` (${d.remark})` : '';
+              let namevalue = '';
+              if (d.remark) {
+                namevalue = `${d.remark} (${d.nickname})`
+              } else {
+                namevalue = d.nickname;
+              }
+              return <Option key={d.openid}>{namevalue}</Option>
+            })}
+          </Select>
+          )}
+        <ul className={styles.advice}>
+          <li className={styles['advice-item']}>
+            <img className={styles.avatar} src="" alt="" />
+            <span className={styles.name}>名字</span>
+            <span className={styles.remark}>备注</span>
+          </li>
+        </ul>
+      </FormItem>
+    ) : (
         <FormItem {...formItemLayout} className={styles['input-wraper']} label="To">
-          {getFieldDecorator('to', {
+          {getFieldDecorator('totag', {
             rules: [{
               required: true,
-              message: 'Please input your name',
+              message: '请选择要通知的粉丝标签'
             }]
           })(
-            <Select
-              mode="multiple"
-              labelInValue
-              placeholder="查找用户"
-              notFoundContent={fetching ? <Spin size="small" /> : null}
-              filterOption={false}
-              onSearch={this.fetchUser}
-              onChange={this.handleChange}
-              style={{ width: '100%' }}
-            >
-              {data.map(d => {
-                console.info('d.remark', d.remark);
-                const remark = d.remark ? ` (${d.remark})` : '';
-                let namevalue = '';
-                if (d.remark) {
-                  namevalue = `${d.remark} (${d.nickname})`
-                } else {
-                  namevalue = d.nickname;
-                }
-                return <Option key={d.openid}>{namevalue}</Option>
-              })}
-            </Select>
+            <RadioGroup {...formItemLayout} options={tags_options}></RadioGroup>
+            // <CheckboxGroup {...formItemLayout} options={tags_options} />
             )}
-          <ul className={styles.advice}>
-            <li className={styles['advice-item']}>
-              <img className={styles.avatar} src="" alt="" />
-              <span className={styles.name}>名字</span>
-              <span className={styles.remark}>备注</span>
-            </li>
-          </ul>
         </FormItem>
+      );
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        {toElem}
         <FormItem {...formItemLayout} label="Message">
           {getFieldDecorator('message', {
             rules: [{
@@ -166,18 +181,19 @@ class SendForm extends Component {
             )}
         </FormItem>
         <FormItem {...formTailLayout}>
-          <Button className={styles.submit} type="primary" onClick={this.handleSubmit}>发送</Button>
+          <Button className={styles.submit} type="primary" htmlType="submit">发送</Button>
         </FormItem>
       </Form>
     );
   }
 }
 
-function mapStateToProps(state) {
-  const { list, total, page } = state.sections;
-  return {
-    loading: state.loading.models.sections,
-    list
-  };
-}
+// function mapStateToProps(state) {
+//   const { list, total, page, tags } = state.sections;
+//   return {
+//     loading: state.loading.models.sections,
+//     list,
+//     tags
+//   };
+// }
 export default connect()(SendForm);

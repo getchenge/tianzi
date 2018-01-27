@@ -5,6 +5,7 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 const FormItem = Form.Item;
 import SendForm from './form';
 import styles from './style.scss';
+import search from '../../utils/search';
 
 class Send extends Component {
   fetchUser = (query) => {
@@ -13,22 +14,27 @@ class Send extends Component {
     dispatch({ type: 'users/search', payload: { query } });
   }
   render() {
+    const { location, tags } = this.props;
+    const searchObj = search(location);
+    const isTags = searchObj.type && searchObj.type === 'tags';
     const WrappedForm = Form.create()(SendForm);
+    console.info('send~~', searchObj, isTags);
     return (
       <div className={styles.container}>
-        <WrappedForm fetchUser={this.fetchUser} />
+        <WrappedForm fetchUser={this.fetchUser} isTags={isTags} tags={tags} />
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { list, total, page } = state.users;
+  const { list, total, page, tags } = state.users;
   return {
     loading: state.loading.models.users,
     users: list,
     total,
     page,
+    tags
   };
 }
 

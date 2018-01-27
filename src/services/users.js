@@ -6,13 +6,19 @@ export function sync() {
     method: 'POST'
   });
 }
+export function getTags() {
+  return request(`/api/tags`, {
+    method: 'GET'
+  });
+}
 export function search({ query }) {
   return request(`/api/users?search=${query}`);
 }
-export function send({ to, message }) {
+export function send({ to, totag, message }) {
+  console.info('send__', { to, totag, message });
   return request(`/api/send`, {
     method: 'POST',
-    body: JSON.stringify({ to, message })
+    body: JSON.stringify({ to, totag, message })
   });
 }
 export function fetch({ page }) {

@@ -26,7 +26,7 @@ class Index extends Component {
           <Link to='/send' className={`${styles.section} ${styles.button}`}>
             <Icon type="message" /> 发通知
           </Link>
-          <Link to='/send?type=tages' className={`${styles.section} ${styles.button}`}>
+          <Link to='/send?type=tags' className={`${styles.section} ${styles.button}`}>
             <Icon type="tags" /> 按标签群发
           </Link>
         </div>

@@ -577,7 +577,7 @@ var _inherits2 = __webpack_require__(62);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-__webpack_require__(611);
+__webpack_require__(616);
 
 __webpack_require__(231);
 
@@ -589,7 +589,7 @@ var _dva = __webpack_require__(222);
 
 var _router = __webpack_require__(226);
 
-var _style = __webpack_require__(612);
+var _style = __webpack_require__(617);
 
 var _style2 = _interopRequireDefault(_style);
 
@@ -651,7 +651,7 @@ var Index = function (_Component) {
           ),
           _react2.default.createElement(
             _router.Link,
-            { to: '/send?type=tages', className: _style2.default.section + ' ' + _style2.default.button },
+            { to: '/send?type=tags', className: _style2.default.section + ' ' + _style2.default.button },
             _react2.default.createElement(_icon2.default, { type: 'tags' }),
             ' \u6309\u6807\u7B7E\u7FA4\u53D1'
           )
@@ -713,7 +713,7 @@ __webpack_require__(225)('getPrototypeOf', function () {
 
 /***/ }),
 
-/***/ 611:
+/***/ 616:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -723,13 +723,13 @@ __webpack_require__(217);
 
 /***/ }),
 
-/***/ 612:
+/***/ 617:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(613);
+var content = __webpack_require__(618);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -755,7 +755,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 613:
+/***/ 618:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(479)(undefined);

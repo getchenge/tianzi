@@ -129,10 +129,38 @@ function massSend(to, message) {
     });
   });
 }
+function sendByTag(tags, message) {
+  return new Promise((resolve, reject) => {
+    const opts = {
+      "msgtype": "text",
+      "text": { "content": message },
+      "tag_id": tags[0]
+    }
+    api.massSend(opts, '', (err, msg) => {
+      console.info('tag_massSend__', err, msg);
+      if (!err) {
+        return resolve(msg);
+      }
+      reject(err, msg);
+    });
+  });
+
+}
+function getTags() {
+  return new Promise((resolve, reject) => {
+    api.getTags((err, msg) => {
+      console.info('gettags__', err, msg);
+      if (!err) {
+        return resolve(msg);
+      }
+      reject(err, msg);
+    })
+  });
+}
 router.post('/api/send', async (ctx, next) => {
   const params = ctx.request.body;
   console.info('api/send', params);
-  const { to, message } = params;
+  const { to, totag, message } = params;
   if (to && to.length === 1) {
     try {
       return ctx.body = await sendText(to, message);
@@ -145,6 +173,8 @@ router.post('/api/send', async (ctx, next) => {
         return ctx.body = error;
       }
     }
+  } else if (totag) {
+    return ctx.body = await sendByTag(totag, message);
   } else {
     try {
       return ctx.body = await massSend(to, message);
@@ -153,7 +183,11 @@ router.post('/api/send', async (ctx, next) => {
       return ctx.body = error;
     }
   }
-
+  // { totags: [ 2 ], message: 'test' }
+});
+router.get('/api/tags', async (ctx, next) => {
+  const result = await getTags();
+  return ctx.body = result.tags;
 });
 router.use('/ids', async (ctx, next) => {
   return ctx.body = await getId;

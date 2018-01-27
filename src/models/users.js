@@ -1,16 +1,18 @@
 import queryString from 'query-string';
 import * as usersService from '../services/users';
+import { getTags } from 'wechat-api/lib/api_tag';
 
 export default {
   namespace: 'users',
   state: {
     list: [],
+    tags: [],
     total: null,
     page: null,
   },
   reducers: {
-    save(state, { payload: { data: list, total, page } }) {
-      return { ...state, list, total, page };
+    save(state, { payload: { data: list, total, page, tags } }) {
+      return { ...state, list, total, page, tags };
     }
   },
   effects: {
@@ -23,8 +25,18 @@ export default {
         },
       });
     },
-    *send({ payload: { to, message } }, { call, put }) {
-      const { data, headers } = yield call(usersService.send, { to, message });
+    *getTags({ }, { call, put }) {
+      const { data, headers } = yield call(usersService.getTags);
+      yield put({
+        type: 'save',
+        payload: {
+          tags: data
+        },
+      });
+    },
+    *send({ payload: { to, totag, message } }, { call, put }) {
+      console.info('*send', to, totag, message);
+      const { data, headers } = yield call(usersService.send, { to, totag, message });
     },
     *search({ payload: { query = '' } }, { call, put }) {
       const { data, headers } = yield call(usersService.search, { query });
@@ -67,6 +79,10 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, search }) => {
         const query = queryString.parse(search);
+        // console.info('model_setup_query', query);
+        if (query.type === 'tags') {
+          dispatch({ type: 'getTags', payload: query });
+        }
         if (pathname === '/users') {
           dispatch({ type: 'fetch', payload: query });
         }
