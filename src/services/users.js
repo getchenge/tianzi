@@ -6,6 +6,19 @@ export function sync() {
     method: 'POST'
   });
 }
+export function login(params) {
+  return request(`/api/login`, {
+    method: 'POST',
+    body: JSON.stringify(params),
+    credentials: 'include'
+  });
+}
+export function checkLogin(params) {
+  return request(`/api/checklogin`, {
+    method: 'get',
+    credentials: 'include'
+  });
+}
 export function getTags() {
   return request(`/api/tags`, {
     method: 'GET'

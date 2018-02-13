@@ -27,10 +27,19 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/Users'),
   });
 
+  const Login = dynamic({
+    app,
+    models: () => [
+      import('./models/users.js'),
+    ],
+    component: () => import('./routes/Login'),
+  });
+
   return (
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={Index} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/send" component={Send} />
         <Route exact path="/users" component={Users} />
       </Switch>

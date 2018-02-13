@@ -189,6 +189,30 @@ router.get('/api/tags', async (ctx, next) => {
   const result = await getTags();
   return ctx.body = result.tags;
 });
+router.post('/api/login', async (ctx, next) => {
+  const params = ctx.request.body;
+  console.info('login_', params);
+  const { username, password } = params;
+  if (username === 'admin' && password === 'admin@tianzi') {
+    ctx.cookies.set('login', 'true', {
+      signed: true
+    });
+    return ctx.body = { login: true };
+  }
+  return ctx.body = { err: true, msg: '账号或密码错误' };
+});
+router.get('/api/checklogin', (ctx, next) => {
+  console.info('checklogin', ctx.cookies.get('login'));
+  if (ctx.cookies.get('login')) {
+    return ctx.body = { login: true };
+  }
+  return ctx.body = { login: false };
+});
+// router.get('/test', (ctx, next) => {
+//   ctx.cookies.set('a', 'b');
+//   console.info('____,cookie_', ctx.cookies.get('login'));
+//   return ctx.body = 'cookies';
+// });
 router.use('/ids', async (ctx, next) => {
   return ctx.body = await getId;
 });

@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 134:
+/***/ 556:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10,360 +10,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _regenerator = __webpack_require__(131);
+var _regenerator = __webpack_require__(132);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _objectDestructuringEmpty2 = __webpack_require__(607);
-
-var _objectDestructuringEmpty3 = _interopRequireDefault(_objectDestructuringEmpty2);
-
-var _extends2 = __webpack_require__(17);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _queryString = __webpack_require__(608);
-
-var _queryString2 = _interopRequireDefault(_queryString);
-
-var _users = __webpack_require__(610);
-
-var usersService = _interopRequireWildcard(_users);
-
-var _api_tag = __webpack_require__(614);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  namespace: 'users',
-  state: {
-    list: [],
-    tags: [],
-    total: null,
-    page: null
-  },
-  reducers: {
-    save: function save(state, _ref) {
-      var _ref$payload = _ref.payload,
-          list = _ref$payload.data,
-          total = _ref$payload.total,
-          page = _ref$payload.page,
-          tags = _ref$payload.tags;
-
-      return (0, _extends3.default)({}, state, { list: list, total: total, page: page, tags: tags });
-    }
-  },
-  effects: {
-    sync: /*#__PURE__*/_regenerator2.default.mark(function sync(_ref2, _ref3) {
-      var call = _ref3.call,
-          put = _ref3.put;
-
-      var _ref4, data, headers;
-
-      return _regenerator2.default.wrap(function sync$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              (0, _objectDestructuringEmpty3.default)(_ref2);
-              _context.next = 3;
-              return call(usersService.sync);
-
-            case 3:
-              _ref4 = _context.sent;
-              data = _ref4.data;
-              headers = _ref4.headers;
-              _context.next = 8;
-              return put({
-                type: 'save',
-                payload: {
-                  data: data
-                }
-              });
-
-            case 8:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, sync, this);
-    }),
-    getTags: /*#__PURE__*/_regenerator2.default.mark(function getTags(_ref5, _ref6) {
-      var call = _ref6.call,
-          put = _ref6.put;
-
-      var _ref7, data, headers;
-
-      return _regenerator2.default.wrap(function getTags$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              (0, _objectDestructuringEmpty3.default)(_ref5);
-              _context2.next = 3;
-              return call(usersService.getTags);
-
-            case 3:
-              _ref7 = _context2.sent;
-              data = _ref7.data;
-              headers = _ref7.headers;
-              _context2.next = 8;
-              return put({
-                type: 'save',
-                payload: {
-                  tags: data
-                }
-              });
-
-            case 8:
-            case 'end':
-              return _context2.stop();
-          }
-        }
-      }, _api_tag.getTags, this);
-    }),
-    send: /*#__PURE__*/_regenerator2.default.mark(function send(_ref8, _ref9) {
-      var _ref8$payload = _ref8.payload,
-          to = _ref8$payload.to,
-          totag = _ref8$payload.totag,
-          message = _ref8$payload.message;
-      var call = _ref9.call,
-          put = _ref9.put;
-
-      var _ref10, data, headers;
-
-      return _regenerator2.default.wrap(function send$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              console.info('*send', to, totag, message);
-              _context3.next = 3;
-              return call(usersService.send, { to: to, totag: totag, message: message });
-
-            case 3:
-              _ref10 = _context3.sent;
-              data = _ref10.data;
-              headers = _ref10.headers;
-
-            case 6:
-            case 'end':
-              return _context3.stop();
-          }
-        }
-      }, send, this);
-    }),
-    search: /*#__PURE__*/_regenerator2.default.mark(function search(_ref11, _ref12) {
-      var _ref11$payload$query = _ref11.payload.query,
-          query = _ref11$payload$query === undefined ? '' : _ref11$payload$query;
-      var call = _ref12.call,
-          put = _ref12.put;
-
-      var _ref13, data, headers;
-
-      return _regenerator2.default.wrap(function search$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.next = 2;
-              return call(usersService.search, { query: query });
-
-            case 2:
-              _ref13 = _context4.sent;
-              data = _ref13.data;
-              headers = _ref13.headers;
-              _context4.next = 7;
-              return put({
-                type: 'save',
-                payload: {
-                  data: data
-                }
-              });
-
-            case 7:
-            case 'end':
-              return _context4.stop();
-          }
-        }
-      }, search, this);
-    }),
-    fetch: /*#__PURE__*/_regenerator2.default.mark(function fetch(_ref14, _ref15) {
-      var _ref14$payload$page = _ref14.payload.page,
-          page = _ref14$payload$page === undefined ? 1 : _ref14$payload$page;
-      var call = _ref15.call,
-          put = _ref15.put;
-
-      var _ref16, data, headers;
-
-      return _regenerator2.default.wrap(function fetch$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.next = 2;
-              return call(usersService.fetch, { page: page });
-
-            case 2:
-              _ref16 = _context5.sent;
-              data = _ref16.data;
-              headers = _ref16.headers;
-              _context5.next = 7;
-              return put({
-                type: 'save',
-                payload: {
-                  data: data,
-                  total: parseInt(headers['x-total-count'], 10),
-                  page: parseInt(page, 10)
-                }
-              });
-
-            case 7:
-            case 'end':
-              return _context5.stop();
-          }
-        }
-      }, fetch, this);
-    }),
-    remove: /*#__PURE__*/_regenerator2.default.mark(function remove(_ref17, _ref18) {
-      var id = _ref17.payload;
-      var call = _ref18.call,
-          put = _ref18.put;
-      return _regenerator2.default.wrap(function remove$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              _context6.next = 2;
-              return call(usersService.remove, id);
-
-            case 2:
-              _context6.next = 4;
-              return put({ type: 'reload' });
-
-            case 4:
-            case 'end':
-              return _context6.stop();
-          }
-        }
-      }, remove, this);
-    }),
-    patch: /*#__PURE__*/_regenerator2.default.mark(function patch(_ref19, _ref20) {
-      var _ref19$payload = _ref19.payload,
-          id = _ref19$payload.id,
-          values = _ref19$payload.values;
-      var call = _ref20.call,
-          put = _ref20.put;
-      return _regenerator2.default.wrap(function patch$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.next = 2;
-              return call(usersService.patch, id, values);
-
-            case 2:
-              _context7.next = 4;
-              return put({ type: 'reload' });
-
-            case 4:
-            case 'end':
-              return _context7.stop();
-          }
-        }
-      }, patch, this);
-    }),
-    create: /*#__PURE__*/_regenerator2.default.mark(function create(_ref21, _ref22) {
-      var values = _ref21.payload;
-      var call = _ref22.call,
-          put = _ref22.put;
-      return _regenerator2.default.wrap(function create$(_context8) {
-        while (1) {
-          switch (_context8.prev = _context8.next) {
-            case 0:
-              _context8.next = 2;
-              return call(usersService.create, values);
-
-            case 2:
-              _context8.next = 4;
-              return put({ type: 'reload' });
-
-            case 4:
-            case 'end':
-              return _context8.stop();
-          }
-        }
-      }, create, this);
-    }),
-    reload: /*#__PURE__*/_regenerator2.default.mark(function reload(action, _ref23) {
-      var put = _ref23.put,
-          select = _ref23.select;
-      var page;
-      return _regenerator2.default.wrap(function reload$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              _context9.next = 2;
-              return select(function (state) {
-                return state.users.page;
-              });
-
-            case 2:
-              page = _context9.sent;
-              _context9.next = 5;
-              return put({ type: 'fetch', payload: { page: page } });
-
-            case 5:
-            case 'end':
-              return _context9.stop();
-          }
-        }
-      }, reload, this);
-    })
-  },
-  subscriptions: {
-    setup: function setup(_ref24) {
-      var dispatch = _ref24.dispatch,
-          history = _ref24.history;
-
-      return history.listen(function (_ref25) {
-        var pathname = _ref25.pathname,
-            search = _ref25.search;
-
-        var query = _queryString2.default.parse(search);
-        // console.info('model_setup_query', query);
-        if (query.type === 'tags') {
-          dispatch({ type: 'getTags', payload: query });
-        }
-        if (pathname === '/users') {
-          dispatch({ type: 'fetch', payload: query });
-        }
-      });
-    }
-  }
-};
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ 516:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _regenerator = __webpack_require__(131);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _assign = __webpack_require__(223);
+var _assign = __webpack_require__(228);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _asyncToGenerator2 = __webpack_require__(517);
+var _asyncToGenerator2 = __webpack_require__(557);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _fetch = __webpack_require__(518);
+var _fetch = __webpack_require__(558);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
@@ -443,7 +102,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 517:
+/***/ 557:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -451,7 +110,7 @@ module.exports = exports['default'];
 
 exports.__esModule = true;
 
-var _promise = __webpack_require__(132);
+var _promise = __webpack_require__(134);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -488,29 +147,29 @@ exports.default = function (fn) {
 
 /***/ }),
 
-/***/ 518:
+/***/ 558:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(519);
+module.exports = __webpack_require__(559);
 
 
 /***/ }),
 
-/***/ 519:
+/***/ 559:
 /***/ (function(module, exports, __webpack_require__) {
 
 // the whatwg-fetch polyfill installs the fetch() function
 // on the global object (window or self)
 //
 // Return that as the export for use in Webpack, Browserify etc.
-__webpack_require__(520);
+__webpack_require__(560);
 module.exports = self.fetch.bind(self);
 
 
 /***/ }),
 
-/***/ 520:
+/***/ 560:
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -978,7 +637,7 @@ module.exports = self.fetch.bind(self);
 
 /***/ }),
 
-/***/ 607:
+/***/ 702:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -992,12 +651,12 @@ exports.default = function (obj) {
 
 /***/ }),
 
-/***/ 608:
+/***/ 703:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strictUriEncode = __webpack_require__(609);
+var strictUriEncode = __webpack_require__(704);
 var objectAssign = __webpack_require__(5);
 
 function encoderForArrayFormat(opts) {
@@ -1205,7 +864,7 @@ exports.stringify = function (obj, opts) {
 
 /***/ }),
 
-/***/ 609:
+/***/ 704:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1219,7 +878,7 @@ module.exports = function (str) {
 
 /***/ }),
 
-/***/ 610:
+/***/ 705:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1229,11 +888,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = __webpack_require__(611);
+var _stringify = __webpack_require__(706);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
 exports.sync = sync;
+exports.login = login;
+exports.checkLogin = checkLogin;
 exports.getTags = getTags;
 exports.search = search;
 exports.send = send;
@@ -1242,17 +903,30 @@ exports.remove = remove;
 exports.patch = patch;
 exports.create = create;
 
-var _request = __webpack_require__(516);
+var _request = __webpack_require__(556);
 
 var _request2 = _interopRequireDefault(_request);
 
-var _constants = __webpack_require__(613);
+var _constants = __webpack_require__(708);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function sync() {
   return (0, _request2.default)('/api/users', {
     method: 'POST'
+  });
+}
+function login(params) {
+  return (0, _request2.default)('/api/login', {
+    method: 'POST',
+    body: (0, _stringify2.default)(params),
+    credentials: 'include'
+  });
+}
+function checkLogin(params) {
+  return (0, _request2.default)('/api/checklogin', {
+    method: 'get',
+    credentials: 'include'
   });
 }
 function getTags() {
@@ -1304,14 +978,14 @@ function create(values) {
 
 /***/ }),
 
-/***/ 611:
+/***/ 706:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(612), __esModule: true };
+module.exports = { "default": __webpack_require__(707), __esModule: true };
 
 /***/ }),
 
-/***/ 612:
+/***/ 707:
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(10);
@@ -1323,7 +997,7 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 
 /***/ }),
 
-/***/ 613:
+/***/ 708:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1336,13 +1010,13 @@ var PAGE_SIZE = exports.PAGE_SIZE = 3;
 
 /***/ }),
 
-/***/ 614:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var util = __webpack_require__(615);
+var util = __webpack_require__(710);
 var wrapper = util.wrapper;
 var postJSON = util.postJSON;
 /**
@@ -1669,7 +1343,7 @@ exports._getUserTags = function (openid, callback) {
 
 /***/ }),
 
-/***/ 615:
+/***/ 710:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1723,6 +1397,427 @@ exports.make = function (host, name, fn) {
   host['_' + name] = fn;
 };
 
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _regenerator = __webpack_require__(132);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _objectDestructuringEmpty2 = __webpack_require__(702);
+
+var _objectDestructuringEmpty3 = _interopRequireDefault(_objectDestructuringEmpty2);
+
+var _extends2 = __webpack_require__(17);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _queryString = __webpack_require__(703);
+
+var _queryString2 = _interopRequireDefault(_queryString);
+
+var _users = __webpack_require__(705);
+
+var usersService = _interopRequireWildcard(_users);
+
+var _api_tag = __webpack_require__(709);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  namespace: 'users',
+  state: {
+    list: [],
+    tags: [],
+    total: null,
+    page: null,
+    login: null
+  },
+  reducers: {
+    save: function save(state, _ref) {
+      var _ref$payload = _ref.payload,
+          list = _ref$payload.data,
+          total = _ref$payload.total,
+          page = _ref$payload.page,
+          tags = _ref$payload.tags;
+
+      return (0, _extends3.default)({}, state, { list: list, total: total, page: page, tags: tags });
+    }
+  },
+  effects: {
+    sync: /*#__PURE__*/_regenerator2.default.mark(function sync(_ref2, _ref3) {
+      var call = _ref3.call,
+          put = _ref3.put;
+
+      var _ref4, data, headers;
+
+      return _regenerator2.default.wrap(function sync$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              (0, _objectDestructuringEmpty3.default)(_ref2);
+              _context.next = 3;
+              return call(usersService.sync);
+
+            case 3:
+              _ref4 = _context.sent;
+              data = _ref4.data;
+              headers = _ref4.headers;
+              _context.next = 8;
+              return put({
+                type: 'save',
+                payload: {
+                  data: data
+                }
+              });
+
+            case 8:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, sync, this);
+    }),
+    login: /*#__PURE__*/_regenerator2.default.mark(function login(_ref5, _ref6) {
+      var _ref5$payload = _ref5.payload,
+          username = _ref5$payload.username,
+          password = _ref5$payload.password;
+      var call = _ref6.call,
+          put = _ref6.put;
+
+      var _ref7, data, headers;
+
+      return _regenerator2.default.wrap(function login$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return call(usersService.login, { username: username, password: password });
+
+            case 2:
+              _ref7 = _context2.sent;
+              data = _ref7.data;
+              headers = _ref7.headers;
+
+              if (!data.err) {
+                _context2.next = 7;
+                break;
+              }
+
+              return _context2.abrupt('return', data);
+
+            case 7:
+              _context2.next = 9;
+              return put({
+                type: 'save',
+                payload: {
+                  login: data
+                }
+              });
+
+            case 9:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, login, this);
+    }),
+    checkLogin: /*#__PURE__*/_regenerator2.default.mark(function checkLogin(_ref8, _ref9) {
+      var call = _ref9.call,
+          put = _ref9.put;
+
+      var _ref10, data, headers;
+
+      return _regenerator2.default.wrap(function checkLogin$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              (0, _objectDestructuringEmpty3.default)(_ref8);
+              _context3.next = 3;
+              return call(usersService.checkLogin);
+
+            case 3:
+              _ref10 = _context3.sent;
+              data = _ref10.data;
+              headers = _ref10.headers;
+
+              console.info('checkLogin__', data, headers);
+              return _context3.abrupt('return', data);
+
+            case 8:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, checkLogin, this);
+    }),
+    getTags: /*#__PURE__*/_regenerator2.default.mark(function getTags(_ref11, _ref12) {
+      var call = _ref12.call,
+          put = _ref12.put;
+
+      var _ref13, data, headers;
+
+      return _regenerator2.default.wrap(function getTags$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              (0, _objectDestructuringEmpty3.default)(_ref11);
+              _context4.next = 3;
+              return call(usersService.getTags);
+
+            case 3:
+              _ref13 = _context4.sent;
+              data = _ref13.data;
+              headers = _ref13.headers;
+              _context4.next = 8;
+              return put({
+                type: 'save',
+                payload: {
+                  tags: data
+                }
+              });
+
+            case 8:
+            case 'end':
+              return _context4.stop();
+          }
+        }
+      }, _api_tag.getTags, this);
+    }),
+    send: /*#__PURE__*/_regenerator2.default.mark(function send(_ref14, _ref15) {
+      var _ref14$payload = _ref14.payload,
+          to = _ref14$payload.to,
+          totag = _ref14$payload.totag,
+          message = _ref14$payload.message;
+      var call = _ref15.call,
+          put = _ref15.put;
+
+      var _ref16, data, headers;
+
+      return _regenerator2.default.wrap(function send$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              console.info('*send', to, totag, message);
+              _context5.next = 3;
+              return call(usersService.send, { to: to, totag: totag, message: message });
+
+            case 3:
+              _ref16 = _context5.sent;
+              data = _ref16.data;
+              headers = _ref16.headers;
+
+            case 6:
+            case 'end':
+              return _context5.stop();
+          }
+        }
+      }, send, this);
+    }),
+    search: /*#__PURE__*/_regenerator2.default.mark(function search(_ref17, _ref18) {
+      var _ref17$payload$query = _ref17.payload.query,
+          query = _ref17$payload$query === undefined ? '' : _ref17$payload$query;
+      var call = _ref18.call,
+          put = _ref18.put;
+
+      var _ref19, data, headers;
+
+      return _regenerator2.default.wrap(function search$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return call(usersService.search, { query: query });
+
+            case 2:
+              _ref19 = _context6.sent;
+              data = _ref19.data;
+              headers = _ref19.headers;
+              _context6.next = 7;
+              return put({
+                type: 'save',
+                payload: {
+                  data: data
+                }
+              });
+
+            case 7:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, search, this);
+    }),
+    fetch: /*#__PURE__*/_regenerator2.default.mark(function fetch(_ref20, _ref21) {
+      var _ref20$payload$page = _ref20.payload.page,
+          page = _ref20$payload$page === undefined ? 1 : _ref20$payload$page;
+      var call = _ref21.call,
+          put = _ref21.put;
+
+      var _ref22, data, headers;
+
+      return _regenerator2.default.wrap(function fetch$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return call(usersService.fetch, { page: page });
+
+            case 2:
+              _ref22 = _context7.sent;
+              data = _ref22.data;
+              headers = _ref22.headers;
+              _context7.next = 7;
+              return put({
+                type: 'save',
+                payload: {
+                  data: data,
+                  total: parseInt(headers['x-total-count'], 10),
+                  page: parseInt(page, 10)
+                }
+              });
+
+            case 7:
+            case 'end':
+              return _context7.stop();
+          }
+        }
+      }, fetch, this);
+    }),
+    remove: /*#__PURE__*/_regenerator2.default.mark(function remove(_ref23, _ref24) {
+      var id = _ref23.payload;
+      var call = _ref24.call,
+          put = _ref24.put;
+      return _regenerator2.default.wrap(function remove$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
+              return call(usersService.remove, id);
+
+            case 2:
+              _context8.next = 4;
+              return put({ type: 'reload' });
+
+            case 4:
+            case 'end':
+              return _context8.stop();
+          }
+        }
+      }, remove, this);
+    }),
+    patch: /*#__PURE__*/_regenerator2.default.mark(function patch(_ref25, _ref26) {
+      var _ref25$payload = _ref25.payload,
+          id = _ref25$payload.id,
+          values = _ref25$payload.values;
+      var call = _ref26.call,
+          put = _ref26.put;
+      return _regenerator2.default.wrap(function patch$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.next = 2;
+              return call(usersService.patch, id, values);
+
+            case 2:
+              _context9.next = 4;
+              return put({ type: 'reload' });
+
+            case 4:
+            case 'end':
+              return _context9.stop();
+          }
+        }
+      }, patch, this);
+    }),
+    create: /*#__PURE__*/_regenerator2.default.mark(function create(_ref27, _ref28) {
+      var values = _ref27.payload;
+      var call = _ref28.call,
+          put = _ref28.put;
+      return _regenerator2.default.wrap(function create$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              _context10.next = 2;
+              return call(usersService.create, values);
+
+            case 2:
+              _context10.next = 4;
+              return put({ type: 'reload' });
+
+            case 4:
+            case 'end':
+              return _context10.stop();
+          }
+        }
+      }, create, this);
+    }),
+    reload: /*#__PURE__*/_regenerator2.default.mark(function reload(action, _ref29) {
+      var put = _ref29.put,
+          select = _ref29.select;
+      var page;
+      return _regenerator2.default.wrap(function reload$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              _context11.next = 2;
+              return select(function (state) {
+                return state.users.page;
+              });
+
+            case 2:
+              page = _context11.sent;
+              _context11.next = 5;
+              return put({ type: 'fetch', payload: { page: page } });
+
+            case 5:
+            case 'end':
+              return _context11.stop();
+          }
+        }
+      }, reload, this);
+    })
+  },
+  subscriptions: {
+    setup: function setup(_ref30) {
+      var dispatch = _ref30.dispatch,
+          history = _ref30.history;
+
+      return history.listen(function (_ref31) {
+        var pathname = _ref31.pathname,
+            search = _ref31.search;
+
+        var query = _queryString2.default.parse(search);
+        if (pathname !== '/login') {
+          dispatch({ type: 'checkLogin' }).then(function (res) {
+            if (!res.login) {
+              history.push('/login');
+            }
+          });
+        }
+        if (query.type === 'tags') {
+          dispatch({ type: 'getTags', payload: query });
+        }
+        if (pathname === '/users') {
+          dispatch({ type: 'fetch', payload: query });
+        }
+      });
+    }
+  }
+};
+module.exports = exports['default'];
 
 /***/ })
 

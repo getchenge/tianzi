@@ -9,6 +9,7 @@ export default {
     tags: [],
     total: null,
     page: null,
+    login: null
   },
   reducers: {
     save(state, { payload: { data: list, total, page, tags } }) {
@@ -24,6 +25,23 @@ export default {
           data
         },
       });
+    },
+    *login({ payload: { username, password } }, { call, put }) {
+      const { data, headers } = yield call(usersService.login, { username, password });
+      if (data.err) {
+        return data;
+      }
+      yield put({
+        type: 'save',
+        payload: {
+          login: data
+        },
+      });
+    },
+    *checkLogin({ }, { call, put }) {
+      const { data, headers } = yield call(usersService.checkLogin);
+      console.info('checkLogin__', data, headers);
+      return data;
     },
     *getTags({ }, { call, put }) {
       const { data, headers } = yield call(usersService.getTags);
@@ -79,7 +97,13 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, search }) => {
         const query = queryString.parse(search);
-        // console.info('model_setup_query', query);
+        if (pathname !== '/login') {
+          dispatch({ type: 'checkLogin' }).then((res) => {
+            if(!res.login){
+              history.push(`/login`);
+            }
+          });
+        }
         if (query.type === 'tags') {
           dispatch({ type: 'getTags', payload: query });
         }

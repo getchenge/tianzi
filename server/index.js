@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const routes = require('./routes');
 
+app.keys = ['secret', 'key'];
 app.use(logger());
 app.use(bodyParser());
 app.use(serve(path.join(__dirname, '../public')));
