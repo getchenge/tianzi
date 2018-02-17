@@ -195,7 +195,8 @@ router.post('/api/login', async (ctx, next) => {
   const { username, password } = params;
   if (username === 'admin' && password === 'admin@tianzi') {
     ctx.cookies.set('login', 'true', {
-      signed: true
+      signed: true,
+      maxAge: 30 * 60 * 1000
     });
     return ctx.body = { login: true };
   }
@@ -216,6 +217,9 @@ router.get('/api/checklogin', (ctx, next) => {
 router.use('/ids', async (ctx, next) => {
   return ctx.body = await getId;
 });
+router.get(/(.*)\.js/, (ctx, next) => {
+  console.info('@@@', ctx.request.url);
+})
 router.get('*', (ctx, next) => {
   return ctx.render('index.dt', { title: '天孜' });
 });
