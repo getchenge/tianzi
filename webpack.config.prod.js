@@ -5,7 +5,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const modStyle = new ExtractTextPlugin('[name].style.css');
 const vendorStyle = new ExtractTextPlugin('[name].vendor.css');
 const pathsToClean = path.join(__dirname, './public/dist');
-const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {

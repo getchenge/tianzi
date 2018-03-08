@@ -34,6 +34,14 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/Login'),
   });
+  
+  const Admins = dynamic({
+    app,
+    models: () => [
+      import('./models/admins.js'),
+    ],
+    component: () => import('./routes/Admins')
+  });
 
   return (
     <Router history={history}>
@@ -41,6 +49,7 @@ function RouterConfig({ history, app }) {
         <Route exact path="/" component={Index} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/send" component={Send} />
+        <Route exact path="/admins" component={Admins} />
         <Route exact path="/users" component={Users} />
       </Switch>
     </Router>

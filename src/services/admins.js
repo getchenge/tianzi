@@ -1,25 +1,25 @@
 import request from '../utils/request';
-import { PAGE_SIZE } from '../constants';
 
 export function fetch() {
-  return request(`/api/sections`);
+  return request(`/api/admins`);
 }
 
 export function remove(id) {
-  return request(`/api/users/${id}`, {
+  return request(`/api/admin`, {
     method: 'DELETE',
+    body: JSON.stringify(id)
   });
 }
 
 export function patch(values) {
-  return request(`/api/section`, {
+  return request(`/api/admin`, {
     method: 'PATCH',
     body: JSON.stringify(values),
   });
 }
 
 export function create(values) {
-  return request('/api/sections', {
+  return request('/api/admins', {
     method: 'POST',
     body: JSON.stringify(values)
   });

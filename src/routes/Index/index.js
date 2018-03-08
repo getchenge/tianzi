@@ -15,8 +15,13 @@ class Index extends Component {
   }
   render() {
     const sync = this.sync;
-    const { loading } = this.props;
-    console.info('this.props', this.props);
+    const { loading, account } = this.props;
+    console.info('this.props', this.props, account);
+    const manage = account.type === 'admin' ? (
+      <Link to='/admins' className={`${styles.section} ${styles.button} ${styles.admin}`}>
+        <Icon type="team" /> 管理运营者账号
+      </Link>
+    ) : '';
     return (
       <div className={styles.container}>
         <div className={styles.nav}>
@@ -29,6 +34,7 @@ class Index extends Component {
           <Link to='/send?type=tags' className={`${styles.section} ${styles.button}`}>
             <Icon type="tags" /> 按标签群发
           </Link>
+          {manage}
         </div>
       </div>
     );
@@ -36,12 +42,11 @@ class Index extends Component {
 }
 
 function mapStateToProps(state) {
-  const { list, total, page } = state.users;
+  const { list, account } = state.users;
   return {
     loading: state.loading.models.users,
     users: list,
-    total,
-    page,
+    account
   };
 }
 

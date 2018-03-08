@@ -7,13 +7,11 @@ export default {
   state: {
     list: [],
     tags: [],
-    total: null,
-    page: null,
-    login: null
+    account: {}
   },
   reducers: {
-    save(state, { payload: { data: list, total, page, tags } }) {
-      return { ...state, list, total, page, tags };
+    save(state, { payload: { data: list, tags, account } }) {
+      return { ...state, list, tags, account };
     }
   },
   effects: {
@@ -31,16 +29,24 @@ export default {
       if (data.err) {
         return data;
       }
+      const { login, type } = data;
       yield put({
         type: 'save',
         payload: {
-          login: data
+          account: { login, type }
         },
       });
     },
     *checkLogin({ }, { call, put }) {
       const { data, headers } = yield call(usersService.checkLogin);
-      console.info('checkLogin__', data, headers);
+      console.info('checkLogin__', data);
+      const { login, type } = data;
+      yield put({
+        type: 'save',
+        payload: {
+          account: { login, type }
+        },
+      });
       return data;
     },
     *getTags({ }, { call, put }) {
@@ -99,7 +105,7 @@ export default {
         const query = queryString.parse(search);
         if (pathname !== '/login') {
           dispatch({ type: 'checkLogin' }).then((res) => {
-            if(!res.login){
+            if (!res.login) {
               history.push(`/login`);
             }
           });

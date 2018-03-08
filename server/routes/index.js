@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const router = Router();
 const WechatAPI = require('wechat-api');
 const User = require('../model/user');
+const Admin = require('../model/admin');
 const Token = require('../model/token');
 
 // const api = new WechatAPI('wx8d66e301b55da679', 'b491fa445f60a8c78087f1b47df44d50');//tianzi
@@ -35,7 +36,7 @@ const getId = new Promise((resolve, reject) => {
     resolve({ err, resp });
   });
 });
-const batch = (openids) => {//todo test
+const batch = (openids) => {
   let n = 0;
   let to;
   let promise_arr = [];
@@ -95,6 +96,40 @@ router.post('/api/users', async (ctx, next) => {//user sync
   console.info('sync__', result);
   return ctx.body = result;
 });
+
+router.get('/api/admins', async (ctx, next) => {
+  return ctx.body = await Admin.find({
+  });
+});
+router.post('/api/admins', async (ctx, next) => {
+  const { account, password } = ctx.request.body;
+  await Admin.create({ account, password }).then(() => {
+    return ctx.body = {};
+  });
+});
+router.patch('/api/admin', async (ctx, next) => {
+  const { account, password, id } = ctx.request.body;
+  const admin = {};
+  console.info('patch_query', { account, password, id });
+  if (account) {
+    Object.assign(admin, { account });
+  }
+  if (password) {
+    Object.assign(admin, { password });
+  }
+  return Admin.findByIdAndUpdate(id, admin).then((...doc) => {
+    console.info('patch__', ...doc);
+    return ctx.body = {};
+  });
+});
+router.delete('/api/admin', async (ctx, next) => {
+  console.info('delete_admin', ctx.request.body);
+  const { id } = ctx.request.body;
+  return Admin.remove({ _id: id }).then(() => {
+    return ctx.body = {};
+  });
+});
+
 // router.get('/sync', async (ctx, next) => {
 //   const result = await getIds.then(batch).then(updateUsers).catch(e => e);
 //   return ctx.body = result;
@@ -183,7 +218,6 @@ router.post('/api/send', async (ctx, next) => {
       return ctx.body = error;
     }
   }
-  // { totags: [ 2 ], message: 'test' }
 });
 router.get('/api/tags', async (ctx, next) => {
   const result = await getTags();
@@ -193,19 +227,30 @@ router.post('/api/login', async (ctx, next) => {
   const params = ctx.request.body;
   console.info('login_', params);
   const { username, password } = params;
-  if (username === 'admin' && password === 'admin@tianzi') {
-    ctx.cookies.set('login', 'true', {
+  let accounts = [{
+    account: 'admin',
+    password: 'admin@tianzi',
+    type: 'admin'
+  }];
+  const other_accounts = await Admin.find({});
+  accounts = accounts.concat(other_accounts);
+  console.info('accounts_', accounts);
+  const account = accounts.find((account) => {
+    return account.account === username && account.password === password;
+  });
+  if (account) {
+    ctx.cookies.set('login', account.type || '', {
       signed: true,
       maxAge: 30 * 60 * 1000
     });
-    return ctx.body = { login: true };
+    return ctx.body = { login: true, type: account.type };
   }
   return ctx.body = { err: true, msg: '账号或密码错误' };
 });
 router.get('/api/checklogin', (ctx, next) => {
   console.info('checklogin', ctx.cookies.get('login'));
   if (ctx.cookies.get('login')) {
-    return ctx.body = { login: true };
+    return ctx.body = { login: true, type: ctx.cookies.get('login') };
   }
   return ctx.body = { login: false };
 });
@@ -217,9 +262,6 @@ router.get('/api/checklogin', (ctx, next) => {
 router.use('/ids', async (ctx, next) => {
   return ctx.body = await getId;
 });
-router.get(/(.*)\.js/, (ctx, next) => {
-  console.info('@@@', ctx.request.url);
-})
 router.get('*', (ctx, next) => {
   return ctx.render('index.dt', { title: '天孜' });
 });
